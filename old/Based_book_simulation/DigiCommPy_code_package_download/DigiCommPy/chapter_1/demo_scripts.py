@@ -39,7 +39,8 @@ def scipy_square_wave():
     fs = overSampRate*f # sampling frequency
     t = np.arange(start=0,stop=nCyl*1/f,step=1/fs)# time base
     g = signal.square(2 * np.pi * f * t, duty = 0.2)
-    plt.plot(t,g); plt.show()
+    plt.plot(t,g)
+    plt.show()
 
 def chirp_demo():
     """
@@ -52,7 +53,8 @@ def chirp_demo():
     fs = 500 # sampling frequency in Hz
     t =np.arange(start = 0, stop = 1,step = 1/fs) #total time base from 0 to 1 second
     g = chirp(t, f0=1, t1=0.5, f1=20, phi=0, method='linear')
-    plt.plot(t,g); plt.show()
+    plt.plot(t,g)
+    plt.show()
 
 def interpret_fft_demo():
     """
@@ -87,9 +89,13 @@ def interpret_fft_demo():
     f=sampleIndex*df # x-axis index converted to frequencies
     
     ax2.stem(sampleIndex,abs(X),use_line_collection=True) # sample values on x-axis
-    ax2.set_title('X[k]');ax2.set_xlabel('k');ax2.set_ylabel('|X(k)|');
-    ax3.stem(f,abs(X),use_line_collection=True); # x-axis represent frequencies
-    ax3.set_title('X[f]');ax3.set_xlabel('frequencies (f)');ax3.set_ylabel('|X(f)|');
+    ax2.set_title('X[k]')
+    ax2.set_xlabel('k')
+    ax2.set_ylabel('|X(k)|')
+    ax3.stem(f,abs(X),use_line_collection=True) # x-axis represent frequencies
+    ax3.set_title('X[f]')
+    ax3.set_xlabel('frequencies (f)')
+    ax3.set_ylabel('|X(f)|')
     fig.show()
     
     nyquistIndex=N//2 #// is for integer division
@@ -107,7 +113,8 @@ def interpret_fft_demo():
     fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)#subplots creation
     ax1.stem(sampleIndex,abs(X1), use_line_collection=True)# result without fftshift
     ax1.stem(sampleIndex,abs(X2),'r', use_line_collection=True) # result with fftshift
-    ax1.set_xlabel('k');ax1.set_ylabel('|X(k)|')
+    ax1.set_xlabel('k')
+    ax1.set_ylabel('|X(k)|')
     
     ax2.stem(f,abs(X1), use_line_collection=True)
     ax2.stem(f,abs(X2),'r' , use_line_collection=True)
@@ -128,13 +135,14 @@ def magnitude_phase_info_from_fft():
     fs=32*fc # sampling frequency with oversampling factor 32
     t=np.arange(start = 0,stop = 2,step = 1/fs) # 2 seconds duration
     
-    phi = phase*np.pi/180; # convert phase shift in degrees in radians
+    phi = phase*np.pi/180 # convert phase shift in degrees in radians
     x=A*np.cos(2*np.pi*fc*t+phi) # time domain signal with phase shift
     
     fig, (ax1, ax2, ax3, ax4) = plt.subplots(nrows=4, ncols=1)
     ax1.plot(t,x) # plot time domain representation
     ax1.set_title(r'$x(t) = 0.5 cos (2 \pi 10 t + \pi/6)$')
-    ax1.set_xlabel('time (t seconds)');ax1.set_ylabel('x(t)')
+    ax1.set_xlabel('time (t seconds)')
+    ax1.set_ylabel('x(t)')
     
     N=256 # FFT size
     X = 1/N*fftshift(fft(x,N)) # N-point complex DFT
@@ -145,22 +153,25 @@ def magnitude_phase_info_from_fft():
     ax2.stem(f,abs(X), use_line_collection=True) # magnitudes vs frequencies
     ax2.set_xlim(-30, 30)
     ax2.set_title('Amplitude spectrum')
-    ax2.set_xlabel('f (Hz)');ax2.set_ylabel(r'$ \left| X(k) \right|$')
+    ax2.set_xlabel('f (Hz)')
+    ax2.set_ylabel(r'$ \left| X(k) \right|$')
     
     phase=np.arctan2(np.imag(X),np.real(X))*180/np.pi # phase information
     ax3.plot(f,phase) # phase vs frequencies
     ax3.set_title('Phase spectrum')
-    ax3.set_ylabel(r"$\angle$ X[k]");ax3.set_xlabel('f(Hz)')
+    ax3.set_ylabel(r"$\angle$ X[k]")
+    ax3.set_xlabel('f(Hz)')
     
     X2=X #store the FFT results in another array
     # detect noise (very small numbers (eps)) and ignore them
-    threshold = max(abs(X))/10000; # tolerance threshold
+    threshold = max(abs(X))/10000 # tolerance threshold
     X2[abs(X)<threshold]=0 # maskout values below the threshold
     phase=np.arctan2(np.imag(X2),np.real(X2))*180/np.pi # phase information
     ax4.stem(f,phase, use_line_collection=True) # phase vs frequencies
     ax4.set_xlim(-30, 30)
     ax4.set_title('Phase spectrum')
-    ax4.set_ylabel(r"$\angle$ X[k]");ax4.set_xlabel('f(Hz)')
+    ax4.set_ylabel(r"$\angle$ X[k]")
+    ax4.set_xlabel('f(Hz)')
     fig.show()
     
     x_recon = N*ifft(ifftshift(X),N) # reconstructed signal
@@ -168,7 +179,8 @@ def magnitude_phase_info_from_fft():
     fig2, ax5 = plt.subplots()
     ax5.plot(t,np.real(x_recon)) # reconstructed signal
     ax5.set_title('reconstructed signal')
-    ax1.set_xlabel('time (t seconds)');ax1.set_ylabel('x(t)')
+    ax1.set_xlabel('time (t seconds)')
+    ax1.set_ylabel('x(t)')
     fig2.show()
 
 def sine_wave_psd_demo():
@@ -188,12 +200,13 @@ def sine_wave_psd_demo():
     fig, (ax1,ax2) = plt.subplots(nrows=1,ncols = 2)
     ax1.plot(t,x)
     ax1.set_title('Sinusoid of frequency $f_c=100 Hz$')
-    ax1.set_xlabel('Time(s)');ax1.set_ylabel('Amplitude')
+    ax1.set_xlabel('Time(s)')
+    ax1.set_ylabel('Amplitude')
     fig.show()
     
     from numpy.linalg import norm
     L=len(x)
-    P=(norm(x)**2)/L; #norm from numpy linear algo package
+    P=(norm(x)**2)/L #norm from numpy linear algo package
     print('Power of the Signal from Time domain {:0.4f}'.format(P))
     
     from scipy.fftpack import fft,fftshift
@@ -203,7 +216,8 @@ def sine_wave_psd_demo():
     fVals=fs*np.arange(start = -NFFT/2,stop = NFFT/2)/NFFT
     ax2.stem(fVals,Px,'r')
     ax2.set_title('Power Spectral Density')
-    ax2.set_xlabel('Frequency (Hz)');ax2.set_ylabel('Power')
+    ax2.set_xlabel('Frequency (Hz)')
+    ax2.set_ylabel('Power')
 
 def compare_convolutions():
     """
@@ -230,23 +244,24 @@ def analytic_signal_demo():
     import matplotlib.pyplot as plt
     from essentials import analytic_signal #import our function from essentials.py
     
-    t=np.arange(start=0,stop=0.5,step=0.001); # time base
+    t=np.arange(start=0,stop=0.5,step=0.001) # time base
     x = np.sin(2*np.pi*10*t) # real-valued f = 10 Hz
     
     fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)
     ax1.plot(t,x) # plot the original signal
     ax1.set_title('x[n] - real-valued signal')
-    ax1.set_xlabel('n');
+    ax1.set_xlabel('n')
     ax1.set_ylabel('x[n]')
     
     z = analytic_signal(x) # construct analytic signal
     
     ax2.plot(t, np.real(z), 'k',label='Real(z[n])')
     ax2.plot(t, np.imag(z), 'r',label='Imag(z[n])')
-    ax2.set_title('Components of Analytic signal');
-    ax2.set_xlabel('n');
+    ax2.set_title('Components of Analytic signal')
+    ax2.set_xlabel('n')
     ax2.set_ylabel(r'$z_r[n]$ and $z_i[n]$')
-    ax2.legend();fig.show()
+    ax2.legend()
+    fig.show()
 
 def extract_envelope_phase():
     """
@@ -275,10 +290,12 @@ def extract_envelope_phase():
     extracted_carrier = np.cos(inst_phase)
     ax1.plot(inst_amplitude,'r') # overlay the extracted envelope
     ax1.set_title('Modulated signal and extracted envelope')
-    ax1.set_xlabel('n');ax1.set_ylabel(r'x(t) and $|z(t)|$')
+    ax1.set_xlabel('n')
+    ax1.set_ylabel(r'x(t) and $|z(t)|$')
     ax2.plot(extracted_carrier)
     ax2.set_title('Extracted carrier or TFS')
-    ax2.set_xlabel('n');ax2.set_ylabel(r'$cos[\omega(t)]$')
+    ax2.set_xlabel('n')
+    ax2.set_ylabel(r'$cos[\omega(t)]$')
     fig.show()
 
 def hilbert_phase_demod():
@@ -308,14 +325,18 @@ def hilbert_phase_demod():
     fig1, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)
     ax1.plot(t,m_t) # plot modulating signal
     ax1.set_title('Modulating signal')
-    ax1.set_xlabel('t');ax1.set_ylabel('m(t)')
+    ax1.set_xlabel('t')
+    ax1.set_ylabel('m(t)')
     
     ax2.plot(t,x) # plot modulated signal
     ax2.set_title('Modulated signal')
-    ax2.set_xlabel('t');ax2.set_ylabel('x(t)');fig1.show()
+    ax2.set_xlabel('t')
+    ax2.set_ylabel('x(t)')
+    fig1.show()
     
     #Add AWGN noise to the transmitted signal
-    mu = 0; sigma = 0.1  # noise mean and sigma
+    mu = 0
+    sigma = 0.1  # noise mean and sigma
     n = mu + sigma*np.random.normal(len(t)) # awgn noise
     r = x + n # noisy received signal
     
@@ -337,4 +358,5 @@ def hilbert_phase_demod():
     ax3.plot(t,demodulated) # demodulated signal
     ax3.set_title('Demodulated signal')
     ax3.set_xlabel('n')
-    ax3.set_ylabel(r'$\hat{m(t)}$');fig2.show()
+    ax3.set_ylabel(r'$\hat{m(t)}$')
+    fig2.show()

@@ -92,6 +92,6 @@ class PilotEstComp():
         self.pilot_est()
         d_dcRemoved = d - (mean(real(d)) + 1j* mean(imag(d)))
         I=real(d_dcRemoved); Q=imag(d_dcRemoved)
-        wi= I;
+        wi= I
         wq = (Q - self.Pest*I)/sqrt(1-self.Pest**2)/self.Kest
         return wi + 1j*wq
